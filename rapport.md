@@ -87,7 +87,7 @@ avec claude Opus 4.5
 ![alt text](etape7V1.png)
 
 avec GPT-5
-![alt text](image7V2.png)
+![alt text](etape7V2.png)
 
 
 L'analyse :
