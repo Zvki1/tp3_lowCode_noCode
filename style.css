@@ -1,0 +1,115 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1a1a2e;
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    margin-bottom: 30px;
+    color: #eee;
+}
+
+/* Contrôles */
+.controls {
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.controls label {
+    font-size: 16px;
+}
+
+.controls input[type="number"] {
+    width: 60px;
+    padding: 8px 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.controls button {
+    padding: 10px 25px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.controls button:hover {
+    background-color: #45a049;
+}
+
+/* Zone des tours */
+.towers-container {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
+
+.tower {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 200px;
+    height: 250px;
+}
+
+/* Socle de la tour */
+.tower-base {
+    width: 180px;
+    height: 15px;
+    background-color: #8B4513;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 30px;
+}
+
+/* Poteau de la tour */
+.tower-pole {
+    width: 12px;
+    height: 180px;
+    background-color: #A0522D;
+    border-radius: 5px 5px 0 0;
+    position: absolute;
+    bottom: 45px;
+}
+
+/* Zone des disques */
+.disks {
+    position: absolute;
+    bottom: 45px;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+}
+
+/* Label de la tour */
+.tower-label {
+    position: absolute;
+    bottom: 0;
+    font-size: 14px;
+    color: #aaa;
+}
