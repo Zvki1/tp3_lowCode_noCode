@@ -57,7 +57,7 @@ Ajoute les fonctionnalités suivantes :
 5. Animations fluides pour les déplacements 
 6. Bouton pour basculer entre mode sombre et mode clair
 
-![alt text](etape6.png)
+![alt text](image6.png)
 
 Étape 7 — Recommence à zéro
 Crée un jeu complet des Tours de Hanoï en HTML/CSS/JavaScript vanilla avec toutes ces fonctionnalités :
