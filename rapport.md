@@ -38,3 +38,4 @@ Améliore l'interface visuelle :
 3. Améliore la mise en page (centrage, espacement)
 4. Ajoute un style aux tours (base, couleur)
 5. Rend le design responsive
+![alt text](image-1.png)

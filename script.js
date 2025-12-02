@@ -5,16 +5,16 @@ const diskCountInput = document.getElementById("diskCount");
 const startBtn = document.getElementById("startBtn");
 const towers = document.querySelectorAll(".tower");
 
-// Couleurs pour les anneaux
+// Couleurs pour les anneaux (avec dégradés)
 const diskColors = [
-  "#FF6B6B", // Rouge
-  "#4ECDC4", // Turquoise
-  "#45B7D1", // Bleu clair
-  "#96CEB4", // Vert menthe
-  "#FFEAA7", // Jaune
-  "#DDA0DD", // Violet clair
-  "#98D8C8", // Vert eau
-  "#F7DC6F", // Or
+  { base: "#FF6B6B", light: "#FF8E8E", dark: "#E84545" }, // Rouge
+  { base: "#4ECDC4", light: "#7EDDD6", dark: "#36B5AD" }, // Turquoise
+  { base: "#45B7D1", light: "#6FC9DF", dark: "#2E9AB8" }, // Bleu clair
+  { base: "#96CEB4", light: "#B5DEC9", dark: "#7ABF9E" }, // Vert menthe
+  { base: "#FFEAA7", light: "#FFF2C4", dark: "#F5D985" }, // Jaune
+  { base: "#DDA0DD", light: "#E8BFE8", dark: "#C882C8" }, // Violet clair
+  { base: "#98D8C8", light: "#B5E5D9", dark: "#7BCBB7" }, // Vert eau
+  { base: "#F7DC6F", light: "#FAE89F", dark: "#F4CE3A" }, // Or
 ];
 
 // Variable pour stocker l'anneau sélectionné
@@ -56,7 +56,11 @@ function generateDisks(count) {
 
     disk.style.width = width + "px";
     disk.style.height = diskHeight + "px";
-    disk.style.backgroundColor = diskColors[(i - 1) % diskColors.length];
+
+    // Appliquer le dégradé de couleur
+    const colorIndex = (i - 1) % diskColors.length;
+    const color = diskColors[colorIndex];
+    disk.style.background = `linear-gradient(180deg, ${color.light} 0%, ${color.base} 50%, ${color.dark} 100%)`;
 
     disks1.appendChild(disk);
   }
