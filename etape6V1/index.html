@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tours de Hanoï</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>🗼 Tours de Hanoï</h1>
+            <button id="theme-toggle" class="theme-btn" aria-label="Changer le thème">
+                <span class="icon-sun">☀️</span>
+                <span class="icon-moon">🌙</span>
+            </button>
+        </header>
+
+        <section class="controls">
+            <div class="input-group">
+                <label for="disk-count">Nombre d'anneaux :</label>
+                <input type="number" id="disk-count" min="3" max="8" value="3">
+                <button id="start-btn" class="btn btn-primary">Démarrer</button>
+            </div>
+            <div class="button-group">
+                <button id="reset-btn" class="btn btn-secondary">🔄 Reset</button>
+                <button id="demo-btn" class="btn btn-accent">🤖 Démo automatique</button>
+            </div>
+        </section>
+
+        <section class="stats">
+            <div class="stat-item">
+                <span class="stat-label">Coups joués</span>
+                <span id="move-count" class="stat-value">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Score optimal</span>
+                <span id="optimal-score" class="stat-value">7</span>
+            </div>
+        </section>
+
+        <main class="game-area">
+            <div class="towers">
+                <div class="tower" data-tower="0">
+                    <div class="tower-base"></div>
+                    <div class="tower-pole"></div>
+                    <div class="disks-container" id="tower-0"></div>
+                    <span class="tower-label">Tour A</span>
+                </div>
+                <div class="tower" data-tower="1">
+                    <div class="tower-base"></div>
+                    <div class="tower-pole"></div>
+                    <div class="disks-container" id="tower-1"></div>
+                    <span class="tower-label">Tour B</span>
+                </div>
+                <div class="tower" data-tower="2">
+                    <div class="tower-base"></div>
+                    <div class="tower-pole"></div>
+                    <div class="disks-container" id="tower-2"></div>
+                    <span class="tower-label">Tour C</span>
+                </div>
+            </div>
+        </main>
+
+        <div id="message" class="message hidden"></div>
+
+        <footer>
+            <p>Cliquez sur un anneau pour le sélectionner, puis sur une tour pour le déplacer.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

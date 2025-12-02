@@ -1,0 +1,566 @@
+/* ==================== */
+/* Variables et Thèmes  */
+/* ==================== */
+:root {
+  --bg-primary: #f0f4f8;
+  --bg-secondary: #ffffff;
+  --text-primary: #1a202c;
+  --text-secondary: #4a5568;
+  --accent-primary: #4299e1;
+  --accent-secondary: #48bb78;
+  --accent-danger: #f56565;
+  --tower-color: #2d3748;
+  --tower-base: #1a202c;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+  --transition: all 0.3s ease;
+}
+
+[data-theme="dark"] {
+  --bg-primary: #1a202c;
+  --bg-secondary: #2d3748;
+  --text-primary: #f7fafc;
+  --text-secondary: #a0aec0;
+  --accent-primary: #63b3ed;
+  --accent-secondary: #68d391;
+  --tower-color: #4a5568;
+  --tower-base: #718096;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* ==================== */
+/* Reset et Base        */
+/* ==================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  transition: var(--transition);
+}
+
+/* ==================== */
+/* Layout               */
+/* ==================== */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  color: var(--text-primary);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* ==================== */
+/* Bouton Thème         */
+/* ==================== */
+.theme-btn {
+  background: var(--bg-secondary);
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.theme-btn:hover {
+  transform: scale(1.1);
+}
+
+.icon-moon {
+  display: none;
+}
+
+[data-theme="dark"] .icon-sun {
+  display: none;
+}
+
+[data-theme="dark"] .icon-moon {
+  display: inline;
+}
+
+/* ==================== */
+/* Contrôles            */
+/* ==================== */
+.controls {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.input-group label {
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.input-group input {
+  width: 80px;
+  padding: 10px 15px;
+  border: 2px solid var(--accent-primary);
+  border-radius: 8px;
+  font-size: 1rem;
+  text-align: center;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: var(--transition);
+}
+
+.input-group input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.3);
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* ==================== */
+/* Boutons              */
+/* ==================== */
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-primary {
+  background: var(--accent-primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #3182ce;
+}
+
+.btn-secondary {
+  background: var(--text-secondary);
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: #2d3748;
+}
+
+.btn-accent {
+  background: linear-gradient(
+    135deg,
+    var(--accent-secondary),
+    var(--accent-primary)
+  );
+  color: white;
+}
+
+.btn-accent:hover {
+  background: linear-gradient(135deg, #38a169, #3182ce);
+}
+
+/* ==================== */
+/* Statistiques         */
+/* ==================== */
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 30px;
+}
+
+.stat-item {
+  background: var(--bg-secondary);
+  padding: 15px 30px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 5px;
+}
+
+.stat-value {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent-primary);
+}
+
+/* ==================== */
+/* Zone de Jeu          */
+/* ==================== */
+.game-area {
+  background: var(--bg-secondary);
+  border-radius: 20px;
+  padding: 40px 20px;
+  box-shadow: var(--shadow-lg);
+  margin-bottom: 20px;
+}
+
+.towers {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  height: 350px;
+  position: relative;
+}
+
+.tower {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 200px;
+  height: 100%;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.tower:hover {
+  transform: scale(1.02);
+}
+
+.tower.selected {
+  filter: brightness(1.1);
+}
+
+.tower-pole {
+  width: 12px;
+  height: 250px;
+  background: linear-gradient(180deg, var(--tower-color), var(--tower-base));
+  border-radius: 6px 6px 0 0;
+  position: absolute;
+  bottom: 30px;
+  z-index: 1;
+}
+
+.tower-base {
+  width: 180px;
+  height: 20px;
+  background: linear-gradient(180deg, var(--tower-base), #000);
+  border-radius: 10px;
+  position: absolute;
+  bottom: 10px;
+  z-index: 2;
+}
+
+.tower-label {
+  position: absolute;
+  bottom: -25px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.disks-container {
+  position: absolute;
+  bottom: 30px;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  z-index: 3;
+}
+
+/* ==================== */
+/* Anneaux              */
+/* ==================== */
+.disk {
+  height: 28px;
+  border-radius: 14px;
+  margin-bottom: 2px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2),
+    inset 0 2px 4px rgba(255, 255, 255, 0.3),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.disk::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 10%;
+  width: 80%;
+  height: 8px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.4), transparent);
+  border-radius: 10px;
+}
+
+.disk:hover {
+  filter: brightness(1.15);
+  transform: scale(1.02);
+}
+
+.disk.selected {
+  transform: translateY(-20px) scale(1.05);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3),
+    inset 0 2px 4px rgba(255, 255, 255, 0.3),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+  animation: pulse 0.8s infinite;
+}
+
+.disk.moving {
+  animation: diskMove 0.5s ease-in-out;
+}
+
+/* Couleurs des anneaux */
+.disk[data-size="1"] {
+  width: 50px;
+  background: linear-gradient(135deg, #f56565, #c53030);
+}
+.disk[data-size="2"] {
+  width: 70px;
+  background: linear-gradient(135deg, #ed8936, #c05621);
+}
+.disk[data-size="3"] {
+  width: 90px;
+  background: linear-gradient(135deg, #ecc94b, #b7791f);
+}
+.disk[data-size="4"] {
+  width: 110px;
+  background: linear-gradient(135deg, #48bb78, #276749);
+}
+.disk[data-size="5"] {
+  width: 130px;
+  background: linear-gradient(135deg, #4299e1, #2b6cb0);
+}
+.disk[data-size="6"] {
+  width: 150px;
+  background: linear-gradient(135deg, #9f7aea, #6b46c1);
+}
+.disk[data-size="7"] {
+  width: 165px;
+  background: linear-gradient(135deg, #ed64a6, #b83280);
+}
+.disk[data-size="8"] {
+  width: 175px;
+  background: linear-gradient(135deg, #667eea, #4c51bf);
+}
+
+/* ==================== */
+/* Animations           */
+/* ==================== */
+@keyframes pulse {
+  0%,
+  100% {
+    transform: translateY(-20px) scale(1.05);
+  }
+  50% {
+    transform: translateY(-25px) scale(1.08);
+  }
+}
+
+@keyframes diskMove {
+  0% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-100px);
+  }
+  70% {
+    transform: translateY(-100px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes victory {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes confetti {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/* ==================== */
+/* Message              */
+/* ==================== */
+.message {
+  background: linear-gradient(
+    135deg,
+    var(--accent-secondary),
+    var(--accent-primary)
+  );
+  color: white;
+  padding: 20px 40px;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  box-shadow: var(--shadow-lg);
+  animation: fadeIn 0.5s ease, victory 0.5s ease infinite;
+}
+
+.message.hidden {
+  display: none;
+}
+
+/* ==================== */
+/* Footer               */
+/* ==================== */
+footer {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  padding: 10px;
+}
+
+/* ==================== */
+/* Confetti             */
+/* ==================== */
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  top: -10px;
+  animation: confetti 3s ease-out forwards;
+  z-index: 1000;
+}
+
+/* ==================== */
+/* Responsive           */
+/* ==================== */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 1.8rem;
+  }
+
+  .towers {
+    height: 300px;
+  }
+
+  .tower {
+    width: 120px;
+  }
+
+  .tower-base {
+    width: 110px;
+  }
+
+  .tower-pole {
+    height: 200px;
+  }
+
+  .disk[data-size="1"] {
+    width: 35px;
+  }
+  .disk[data-size="2"] {
+    width: 45px;
+  }
+  .disk[data-size="3"] {
+    width: 55px;
+  }
+  .disk[data-size="4"] {
+    width: 65px;
+  }
+  .disk[data-size="5"] {
+    width: 75px;
+  }
+  .disk[data-size="6"] {
+    width: 85px;
+  }
+  .disk[data-size="7"] {
+    width: 95px;
+  }
+  .disk[data-size="8"] {
+    width: 105px;
+  }
+
+  .stats {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .input-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .button-group {
+    justify-content: center;
+  }
+}

@@ -58,3 +58,30 @@ Ajoute les fonctionnalités suivantes :
 6. Bouton pour basculer entre mode sombre et mode clair
 
 ![alt text](etape6.png)
+
+Étape 7 — Recommence à zéro
+Crée un jeu complet des Tours de Hanoï en HTML/CSS/JavaScript vanilla avec toutes ces fonctionnalités :
+
+REQUIS VISUEL :
+- 3 tours verticales alignées horizontalement
+- Anneaux colorés empilés sur la première tour
+- Interface propre et moderne
+
+FONCTIONNALITÉS :
+1. Champ pour choisir le nombre d'anneaux (3-8) + bouton "Démarrer"
+2. Déplacement des anneaux par clic : sélectionner un anneau, puis cliquer sur une tour destination
+3. Respect de la règle : anneau ne peut aller que sur un anneau plus grand
+4. Compteur de coups
+5. Détection de victoire + message
+6. Score optimal affiché 
+7. Bouton "Reset"
+8. Bouton "Démo automatique" qui résout le jeu visuellement avec l'algorithme récursif
+9. Animations fluides pour tous les déplacements
+10. Toggle mode sombre/clair
+
+STRUCTURE DU CODE :
+- HTML sémantique
+- CSS organisé
+- JavaScript 
+avec claude Opus 4.5
+![alt text](etape7V1.png)
