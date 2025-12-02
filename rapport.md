@@ -1,0 +1,2 @@
+etape 0:
+je suis un developeur web , vous etes a la tache de m'aider a effectuer un projet qui est la tour de hanoi ,on avancera etape par etape tout au long du projet, pour chaque etape je te passe un ordre ou bien un prompt , votre reponse se focalise juste sur cett etape en question, n'enchainer pas les prochaines etapes sans mon feu vert 
