@@ -39,3 +39,13 @@ Améliore l'interface visuelle :
 4. Ajoute un style aux tours (base, couleur)
 5. Rend le design responsive
 ![alt text](image-1.png)
+
+Étape 5 — Ajout d’un mode "Démo automaique"
+Ajoute un bouton "Démo automatique" qui résout le jeu automatiquement avec l'algorithme récursif des Tours de Hanoï.
+- L'algorithme doit être visible (pas instantané)
+- Chaque mouvement doit être animé
+- Utilise la fonction récursive classique
+- Affiche un message quand la démo est terminée
+![alt text](etape5.png)
+
+Étape 6 — Extensions obligatoires

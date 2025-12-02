@@ -3,6 +3,7 @@
 // Récupération des éléments du DOM
 const diskCountInput = document.getElementById("diskCount");
 const startBtn = document.getElementById("startBtn");
+const demoBtn = document.getElementById("demoBtn");
 const towers = document.querySelectorAll(".tower");
 
 // Couleurs pour les anneaux (avec dégradés)
@@ -20,6 +21,10 @@ const diskColors = [
 // Variable pour stocker l'anneau sélectionné
 let selectedDisk = null;
 let sourceTower = null;
+
+// Variable pour la démo automatique
+let isAnimating = false;
+let animationSpeed = 500; // Vitesse de l'animation en ms
 
 // Fonction pour générer les anneaux sur la première tour
 function generateDisks(count) {
@@ -171,6 +176,12 @@ towers.forEach((tower) => {
 
 // Écouteur d'événement sur le bouton Démarrer
 startBtn.addEventListener("click", function () {
+  // Ne pas permettre de redémarrer pendant une animation
+  if (isAnimating) {
+    alert("Une démo est en cours. Veuillez attendre qu'elle se termine.");
+    return;
+  }
+
   const diskCount = parseInt(diskCountInput.value);
 
   // Validation du nombre d'anneaux
@@ -184,3 +195,120 @@ startBtn.addEventListener("click", function () {
 
   console.log("Jeu démarré avec " + diskCount + " anneaux");
 });
+
+// ==================== ALGORITHME DE RÉSOLUTION AUTOMATIQUE ====================
+
+// Fonction pour obtenir l'élément tour par son numéro (1, 2 ou 3)
+function getTowerElement(towerNumber) {
+  return document.getElementById("tower" + towerNumber);
+}
+
+// Fonction pour déplacer un anneau d'une tour à une autre (pour la démo)
+function moveDisk(fromTower, toTower) {
+  return new Promise((resolve) => {
+    const sourceTowerEl = getTowerElement(fromTower);
+    const destTowerEl = getTowerElement(toTower);
+    
+    const sourceDisks = sourceTowerEl.querySelector(".disks");
+    const destDisks = destTowerEl.querySelector(".disks");
+    
+    // Récupérer l'anneau du dessus de la tour source
+    const disks = sourceDisks.querySelectorAll(".disk");
+    if (disks.length === 0) {
+      resolve();
+      return;
+    }
+    
+    const diskToMove = disks[disks.length - 1];
+    
+    // Ajouter la classe selected pour l'animation
+    diskToMove.classList.add("selected");
+    
+    // Attendre un peu pour montrer la sélection
+    setTimeout(() => {
+      // Déplacer l'anneau
+      destDisks.appendChild(diskToMove);
+      
+      // Retirer la classe selected
+      diskToMove.classList.remove("selected");
+      
+      resolve();
+    }, animationSpeed / 2);
+  });
+}
+
+// Algorithme récursif classique des Tours de Hanoï
+// n = nombre d'anneaux
+// source = tour de départ (1, 2 ou 3)
+// destination = tour d'arrivée (1, 2 ou 3)
+// auxiliary = tour auxiliaire (1, 2 ou 3)
+async function hanoi(n, source, destination, auxiliary) {
+  if (n === 0) {
+    return;
+  }
+  
+  // Étape 1 : Déplacer n-1 anneaux de source vers auxiliaire
+  await hanoi(n - 1, source, auxiliary, destination);
+  
+  // Étape 2 : Déplacer l'anneau restant de source vers destination
+  await moveDisk(source, destination);
+  await sleep(animationSpeed / 2);
+  
+  // Étape 3 : Déplacer n-1 anneaux d'auxiliaire vers destination
+  await hanoi(n - 1, auxiliary, destination, source);
+}
+
+// Fonction utilitaire pour attendre
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+// Fonction pour lancer la démo automatique
+async function startDemo() {
+  if (isAnimating) {
+    alert("Une démo est déjà en cours.");
+    return;
+  }
+  
+  const diskCount = parseInt(diskCountInput.value);
+  
+  // Validation du nombre d'anneaux
+  if (diskCount < 1 || diskCount > 8) {
+    alert("Veuillez choisir un nombre d'anneaux entre 1 et 8");
+    return;
+  }
+  
+  // Réinitialiser le jeu
+  generateDisks(diskCount);
+  
+  // Désactiver les interactions pendant la démo
+  isAnimating = true;
+  demoBtn.disabled = true;
+  startBtn.disabled = true;
+  demoBtn.textContent = "Démo en cours...";
+  
+  // Attendre un peu avant de commencer
+  await sleep(500);
+  
+  // Lancer l'algorithme récursif
+  // Déplacer tous les anneaux de la tour 1 vers la tour 3
+  await hanoi(diskCount, 1, 3, 2);
+  
+  // Réactiver les interactions
+  isAnimating = false;
+  demoBtn.disabled = false;
+  startBtn.disabled = false;
+  demoBtn.textContent = "Démo automatique";
+  
+  // Afficher le message de fin
+  showCompletionMessage(diskCount);
+}
+
+// Fonction pour afficher le message de fin
+function showCompletionMessage(diskCount) {
+  const moves = Math.pow(2, diskCount) - 1;
+  alert(`🎉 Démo terminée !\n\nLe puzzle a été résolu en ${moves} mouvements.\n\nFormule : 2^n - 1 = 2^${diskCount} - 1 = ${moves}`);
+}
+
+// Écouteur d'événement sur le bouton Démo
+demoBtn.addEventListener("click", startDemo);
