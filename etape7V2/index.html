@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="fr" data-theme="light">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Tours de Hanoï</title>
+		<link rel="stylesheet" href="./style.css" />
+	</head>
+	<body>
+		<header class="app-header">
+			<h1 class="title">Tours de Hanoï</h1>
+			<div class="theme-toggle" title="Mode clair/sombre">
+				<label class="switch">
+					<input id="themeToggle" type="checkbox" aria-label="Basculer mode sombre" />
+					<span class="slider"></span>
+				</label>
+				<span class="mode-label" id="modeLabel">Clair</span>
+			</div>
+		</header>
+
+		<section class="controls" aria-label="Contrôles du jeu">
+			<div class="field-group">
+				<label for="ringCount">Anneaux</label>
+				<input id="ringCount" type="number" min="3" max="8" value="3" inputmode="numeric" />
+			</div>
+			<div class="button-row">
+				<button id="startBtn" class="btn primary">Démarrer</button>
+				<button id="resetBtn" class="btn" disabled>Reset</button>
+				<button id="demoBtn" class="btn">Démo automatique</button>
+			</div>
+			<div class="status-row" aria-live="polite">
+				<div>Coups: <strong id="moveCount">0</strong></div>
+				<div>Optimal: <strong id="optimalMoves">7</strong></div>
+			</div>
+		</section>
+
+		<main class="board" id="board" aria-label="Plateau des Tours de Hanoï">
+			<section class="tower" data-index="0" role="button" aria-label="Tour 1">
+				<div class="peg" aria-hidden="true"></div>
+				<div class="stack" id="tower-0"></div>
+				<div class="base" aria-hidden="true"></div>
+			</section>
+			<section class="tower" data-index="1" role="button" aria-label="Tour 2">
+				<div class="peg" aria-hidden="true"></div>
+				<div class="stack" id="tower-1"></div>
+				<div class="base" aria-hidden="true"></div>
+			</section>
+			<section class="tower" data-index="2" role="button" aria-label="Tour 3">
+				<div class="peg" aria-hidden="true"></div>
+				<div class="stack" id="tower-2"></div>
+				<div class="base" aria-hidden="true"></div>
+			</section>
+		</main>
+
+		<section class="messages" aria-live="polite" aria-atomic="true">
+			<p id="message" class="message" hidden></p>
+		</section>
+
+		<footer class="app-footer">
+			<small>Algorithme récursif • Démonstration visuelle</small>
+		</footer>
+
+		<script src="./script.js" defer></script>
+	</body>
+	</html>
