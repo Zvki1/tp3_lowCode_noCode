@@ -20,3 +20,21 @@ Quand on clique sur le bouton "Démarrer", génère dynamiquement le nombre d'an
 - Chaque anneau doit avoir une largeur corespondante à sa taille
 - Les anneaux doivent être centrés sur la tour
   ![alt text](etape2.png)
+
+Étape 3 — Déplacement des anneaux
+Ajoute la logique de déplacement :
+1. Quand on clique sur un anneau, il est "sélectionné"
+2. Quand on clique sur une tour, l'anneau sélectionné y est déplacé
+3. Respecte la règle : un anneau ne peut être placé que sur un anneau plus grand
+4. Si le mouvement est invalide, annule la sélection
+5. Affiche un effet visuel pour la sélection
+
+![alt text](image.png)
+
+Étape 4 : Améliorations visuelles
+Améliore l'interface visuelle :
+1. Ajoute des couleurs aux anneaux (dégradé ou palette)
+2. Anime les déplacements (transition CSS)
+3. Améliore la mise en page (centrage, espacement)
+4. Ajoute un style aux tours (base, couleur)
+5. Rend le design responsive
