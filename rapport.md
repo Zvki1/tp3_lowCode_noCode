@@ -49,3 +49,12 @@ Ajoute un bouton "Démo automatique" qui résout le jeu automatiquement avec l'a
 ![alt text](etape5.png)
 
 Étape 6 — Extensions obligatoires
+Ajoute les fonctionnalités suivantes :
+1. Compteur de coups (affiche les coups manuels et automatiques)
+2. Détection de victoire + message de félicitations quand tous les anneaux sont sur la dernière tour
+3. Système de score basé sur le nombre minimal de coups (2^n - 1)
+4. Bouton "Reset" qui remet le jeu à l'état initial
+5. Animations fluides pour les déplacements 
+6. Bouton pour basculer entre mode sombre et mode clair
+
+![alt text](etape6.png)

@@ -4,7 +4,15 @@
 const diskCountInput = document.getElementById("diskCount");
 const startBtn = document.getElementById("startBtn");
 const demoBtn = document.getElementById("demoBtn");
+const resetBtn = document.getElementById("resetBtn");
+const themeToggle = document.getElementById("themeToggle");
 const towers = document.querySelectorAll(".tower");
+const moveCountDisplay = document.getElementById("moveCount");
+const minMovesDisplay = document.getElementById("minMoves");
+const scoreDisplay = document.getElementById("score");
+const victoryModal = document.getElementById("victoryModal");
+const victoryMessage = document.getElementById("victoryMessage");
+const victoryCloseBtn = document.getElementById("victoryCloseBtn");
 
 // Couleurs pour les anneaux (avec dégradés)
 const diskColors = [
@@ -18,13 +26,58 @@ const diskColors = [
   { base: "#F7DC6F", light: "#FAE89F", dark: "#F4CE3A" }, // Or
 ];
 
-// Variable pour stocker l'anneau sélectionné
+// Variables d'état du jeu
 let selectedDisk = null;
 let sourceTower = null;
-
-// Variable pour la démo automatique
 let isAnimating = false;
-let animationSpeed = 500; // Vitesse de l'animation en ms
+let animationSpeed = 500;
+let moveCount = 0;
+let currentDiskCount = 0;
+let gameStarted = false;
+let isDarkMode = true;
+
+// ==================== COMPTEUR ET SCORE ====================
+
+// Fonction pour calculer le nombre minimum de coups
+function calculateMinMoves(n) {
+  return Math.pow(2, n) - 1;
+}
+
+// Fonction pour mettre à jour l'affichage du compteur
+function updateMoveCount() {
+  moveCountDisplay.textContent = moveCount;
+  updateScore();
+}
+
+// Fonction pour mettre à jour le score
+function updateScore() {
+  if (!gameStarted || currentDiskCount === 0) {
+    scoreDisplay.textContent = "-";
+    return;
+  }
+
+  const minMoves = calculateMinMoves(currentDiskCount);
+  if (moveCount === 0) {
+    scoreDisplay.textContent = "100%";
+  } else if (moveCount <= minMoves) {
+    scoreDisplay.textContent = "100%";
+  } else {
+    const efficiency = Math.max(0, Math.round((minMoves / moveCount) * 100));
+    scoreDisplay.textContent = efficiency + "%";
+  }
+}
+
+// Fonction pour réinitialiser le compteur
+function resetMoveCount() {
+  moveCount = 0;
+  updateMoveCount();
+}
+
+// Fonction pour incrémenter le compteur
+function incrementMoveCount() {
+  moveCount++;
+  updateMoveCount();
+}
 
 // Fonction pour générer les anneaux sur la première tour
 function generateDisks(count) {
@@ -37,9 +90,15 @@ function generateDisks(count) {
   disks2.innerHTML = "";
   disks3.innerHTML = "";
 
-  // Réinitialiser la sélection
+  // Réinitialiser la sélection et le compteur
   selectedDisk = null;
   sourceTower = null;
+  currentDiskCount = count;
+  gameStarted = true;
+  resetMoveCount();
+
+  // Mettre à jour l'affichage du minimum
+  minMovesDisplay.textContent = calculateMinMoves(count);
 
   // Largeur minimale et maximale des anneaux
   const minWidth = 40;
@@ -72,6 +131,9 @@ function generateDisks(count) {
 
   // Ajouter les écouteurs de clic sur les anneaux
   addDiskListeners();
+
+  // Fermer le modal de victoire si ouvert
+  hideVictoryModal();
 }
 
 // Fonction pour ajouter les écouteurs sur les anneaux
@@ -150,10 +212,21 @@ function tryMoveDisk(destinationTower) {
   }
 
   if (isValidMove) {
-    // Déplacer l'anneau
+    // Déplacer l'anneau avec animation
     const disksContainer = destinationTower.querySelector(".disks");
+    selectedDisk.classList.add("moving");
     disksContainer.appendChild(selectedDisk);
+    selectedDisk.classList.remove("moving");
+
+    // Incrémenter le compteur
+    incrementMoveCount();
+
     deselectDisk();
+
+    // Vérifier la victoire (seulement en mode manuel, pas pendant la démo)
+    if (!isAnimating) {
+      checkVictory();
+    }
   } else {
     // Mouvement invalide, annuler la sélection
     deselectDisk();
@@ -173,6 +246,92 @@ function deselectDisk() {
 towers.forEach((tower) => {
   tower.addEventListener("click", handleTowerClick);
 });
+
+// ==================== DÉTECTION DE VICTOIRE ====================
+
+// Fonction pour vérifier si le joueur a gagné
+function checkVictory() {
+  const disks3 = document.getElementById("disks3");
+  const disksOnTower3 = disks3.querySelectorAll(".disk");
+
+  // Victoire si tous les anneaux sont sur la tour 3
+  if (disksOnTower3.length === currentDiskCount && currentDiskCount > 0) {
+    showVictoryModal();
+  }
+}
+
+// Fonction pour afficher le modal de victoire
+function showVictoryModal() {
+  const minMoves = calculateMinMoves(currentDiskCount);
+  const efficiency = Math.round((minMoves / moveCount) * 100);
+
+  let message = `Vous avez résolu le puzzle en <strong>${moveCount}</strong> coups !<br><br>`;
+  message += `Nombre minimum de coups : <strong>${minMoves}</strong><br>`;
+  message += `Votre efficacité : <strong>${efficiency}%</strong><br><br>`;
+
+  if (moveCount === minMoves) {
+    message += `🏆 <strong>PARFAIT !</strong> Vous avez atteint le score optimal ! 🏆`;
+  } else if (efficiency >= 80) {
+    message += `⭐ Excellent travail ! ⭐`;
+  } else if (efficiency >= 50) {
+    message += `👍 Bien joué ! Vous pouvez encore vous améliorer.`;
+  } else {
+    message += `💪 Continuez à vous entraîner !`;
+  }
+
+  victoryMessage.innerHTML = message;
+  victoryModal.classList.remove("hidden");
+}
+
+// Fonction pour cacher le modal de victoire
+function hideVictoryModal() {
+  victoryModal.classList.add("hidden");
+}
+
+// Écouteur pour fermer le modal et rejouer
+victoryCloseBtn.addEventListener("click", function () {
+  hideVictoryModal();
+  generateDisks(currentDiskCount);
+});
+
+// ==================== BOUTON RESET ====================
+
+resetBtn.addEventListener("click", function () {
+  if (isAnimating) {
+    alert("Une démo est en cours. Veuillez attendre qu'elle se termine.");
+    return;
+  }
+
+  if (currentDiskCount > 0) {
+    generateDisks(currentDiskCount);
+  } else {
+    generateDisks(parseInt(diskCountInput.value));
+  }
+});
+
+// ==================== MODE SOMBRE / CLAIR ====================
+
+function toggleTheme() {
+  isDarkMode = !isDarkMode;
+  document.body.classList.toggle("light-mode", !isDarkMode);
+  themeToggle.textContent = isDarkMode ? "🌙" : "☀️";
+
+  // Sauvegarder la préférence
+  localStorage.setItem("hanoiTheme", isDarkMode ? "dark" : "light");
+}
+
+// Charger la préférence de thème
+function loadThemePreference() {
+  const savedTheme = localStorage.getItem("hanoiTheme");
+  if (savedTheme === "light") {
+    isDarkMode = false;
+    document.body.classList.add("light-mode");
+    themeToggle.textContent = "☀️";
+  }
+}
+
+themeToggle.addEventListener("click", toggleTheme);
+loadThemePreference();
 
 // Écouteur d'événement sur le bouton Démarrer
 startBtn.addEventListener("click", function () {
@@ -208,30 +367,37 @@ function moveDisk(fromTower, toTower) {
   return new Promise((resolve) => {
     const sourceTowerEl = getTowerElement(fromTower);
     const destTowerEl = getTowerElement(toTower);
-    
+
     const sourceDisks = sourceTowerEl.querySelector(".disks");
     const destDisks = destTowerEl.querySelector(".disks");
-    
+
     // Récupérer l'anneau du dessus de la tour source
     const disks = sourceDisks.querySelectorAll(".disk");
     if (disks.length === 0) {
       resolve();
       return;
     }
-    
+
     const diskToMove = disks[disks.length - 1];
-    
+
     // Ajouter la classe selected pour l'animation
     diskToMove.classList.add("selected");
-    
+
     // Attendre un peu pour montrer la sélection
     setTimeout(() => {
+      // Ajouter la classe moving pour l'animation fluide
+      diskToMove.classList.add("moving");
+
       // Déplacer l'anneau
       destDisks.appendChild(diskToMove);
-      
-      // Retirer la classe selected
+
+      // Retirer les classes d'animation
       diskToMove.classList.remove("selected");
-      
+      diskToMove.classList.remove("moving");
+
+      // Incrémenter le compteur
+      incrementMoveCount();
+
       resolve();
     }, animationSpeed / 2);
   });
@@ -246,14 +412,14 @@ async function hanoi(n, source, destination, auxiliary) {
   if (n === 0) {
     return;
   }
-  
+
   // Étape 1 : Déplacer n-1 anneaux de source vers auxiliaire
   await hanoi(n - 1, source, auxiliary, destination);
-  
+
   // Étape 2 : Déplacer l'anneau restant de source vers destination
   await moveDisk(source, destination);
   await sleep(animationSpeed / 2);
-  
+
   // Étape 3 : Déplacer n-1 anneaux d'auxiliaire vers destination
   await hanoi(n - 1, auxiliary, destination, source);
 }
@@ -269,45 +435,53 @@ async function startDemo() {
     alert("Une démo est déjà en cours.");
     return;
   }
-  
+
   const diskCount = parseInt(diskCountInput.value);
-  
+
   // Validation du nombre d'anneaux
   if (diskCount < 1 || diskCount > 8) {
     alert("Veuillez choisir un nombre d'anneaux entre 1 et 8");
     return;
   }
-  
+
   // Réinitialiser le jeu
   generateDisks(diskCount);
-  
+
   // Désactiver les interactions pendant la démo
   isAnimating = true;
   demoBtn.disabled = true;
   startBtn.disabled = true;
+  resetBtn.disabled = true;
   demoBtn.textContent = "Démo en cours...";
-  
+
   // Attendre un peu avant de commencer
   await sleep(500);
-  
+
   // Lancer l'algorithme récursif
   // Déplacer tous les anneaux de la tour 1 vers la tour 3
   await hanoi(diskCount, 1, 3, 2);
-  
+
   // Réactiver les interactions
   isAnimating = false;
   demoBtn.disabled = false;
   startBtn.disabled = false;
+  resetBtn.disabled = false;
   demoBtn.textContent = "Démo automatique";
-  
-  // Afficher le message de fin
-  showCompletionMessage(diskCount);
+
+  // Afficher le message de fin (version démo)
+  showDemoCompletionMessage(diskCount);
 }
 
-// Fonction pour afficher le message de fin
-function showCompletionMessage(diskCount) {
-  const moves = Math.pow(2, diskCount) - 1;
-  alert(`🎉 Démo terminée !\n\nLe puzzle a été résolu en ${moves} mouvements.\n\nFormule : 2^n - 1 = 2^${diskCount} - 1 = ${moves}`);
+// Fonction pour afficher le message de fin de la démo
+function showDemoCompletionMessage(diskCount) {
+  const moves = calculateMinMoves(diskCount);
+
+  let message = `La démo a résolu le puzzle en <strong>${moves}</strong> coups (optimal).<br><br>`;
+  message += `Formule : 2<sup>n</sup> - 1 = 2<sup>${diskCount}</sup> - 1 = <strong>${moves}</strong><br><br>`;
+  message += `🤖 C'est maintenant à votre tour !`;
+
+  victoryMessage.innerHTML = message;
+  victoryModal.classList.remove("hidden");
 }
 
 // Écouteur d'événement sur le bouton Démo
