@@ -11,3 +11,12 @@ cree une page web simple pour le jeu des tours de hanoi avec :
 
 ![alt text](etape1.png)
 
+Étape 2 : Génération dynamique des anneaux
+Ajoute la fonctionnalité suivante :
+Quand on clique sur le bouton "Démarrer", génère dynamiquement le nombre d'anneaux choisi sur la première tour.
+
+- Les anneaux doivent etre empilés
+- Plus l'anneau est grand, plus il est bas dans la pile
+- Chaque anneau doit avoir une largeur corespondante à sa taille
+- Les anneaux doivent être centrés sur la tour
+  ![alt text](etape2.png)
