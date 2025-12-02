@@ -88,3 +88,8 @@ avec claude Opus 4.5
 
 avec GPT-5
 ![alt text](image7V2.png)
+
+
+L'analyse :
+Le LLM a permis de travailler très rapidement sur le projet avec un résultat fonctionnel impressionnant, répondant vraiment aux besoins du TP. Mais le point négatif, c'est que le LLM donne le code sans s'assurer que tu comprends ce qu'il t'a donné et ce qui est important en tant qu'étudiant.
+Dans mes prompts, j'ai commencé par préparer le LLM en lui donnant un rôle comme co-développeur pour réaliser un projet de TP. Je lui ai expliqué sa tâche tout en présentant les contraintes, surtout de donner juste le code de l'étape en question.
